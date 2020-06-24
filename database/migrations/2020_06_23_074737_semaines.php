@@ -17,6 +17,9 @@ class Semaines extends Migration
           $table->bigIncrements('id');
           $table->string('nom', 250);
           $table->string('num', 250);
+          $table->string('numsem', 250);
+          $table->string('debut', 250);
+          $table->string('fin', 250);
 
       });
     }

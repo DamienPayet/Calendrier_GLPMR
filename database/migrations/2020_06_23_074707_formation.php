@@ -13,7 +13,7 @@ class Formation extends Migration
      */
     public function up()
     {
-      Schema::create('formation', function (Blueprint $table) {
+      Schema::create('formations', function (Blueprint $table) {
           $table->bigIncrements('id');
           $table->string('nom', 250);
           $table->string('idform',250);

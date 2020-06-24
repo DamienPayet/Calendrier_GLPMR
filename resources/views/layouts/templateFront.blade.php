@@ -13,40 +13,60 @@
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://bootswatch.com/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
   <!-- CSS Files -->
   <link href="{{url('css/bootstrap.min.css')}}" rel="stylesheet" />
   <link href="{{url('css/paper-dashboard.css?v=2.0.1')}}" rel="stylesheet" />
 </head>
-
 <body class="">
   <div class="wrapper ">
     <div class="sidebar" data-color="white" data-active-color="danger">
       <div class="logo">
         <a href="https://www.creative-tim.com" class="simple-text logo-normal">
-           <div class="logo-image-big">
+          <div class="logo-image-big">
             <img src="{{url('img/logo.svg')}}">
           </div>
         </a>
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="active ">
-            <a href="javascript:;">
-              <i class="nc-icon nc-bank"></i>
-              <p>First Item</p>
-            </a>
+          <li class="nav-item btn-rotate dropdown">
+            <div class="form-group">
+              <a>
+                <i class="nc-icon nc-bank"></i>
+                <p>Formation :</p>
+              </a>
+              <select class="form-control" onchange="val()" id="formation">
+                @foreach ($lesformations as $formation)
+                  <option value="{{$formation->idform}}" >{{$formation->nom}}</option>
+                @endforeach
+              </select>
+            </div>
           </li>
           <li>
-            <a href="javascript:;">
-              <i class="nc-icon nc-diamond"></i>
-              <p>Second Item</p>
-            </a>
+            <div class="form-group">
+              <a>
+                <i class="nc-icon nc-calendar-60"></i>
+                <p>Semaine :</p>
+              </a>
+              <select class="form-control" onchange="val()" id="date">
+              </select>
+            </div>
           </li>
+          <br>
           <li>
-            <a href="javascript:;">
-              <i class="nc-icon nc-pin-3"></i>
-              <p>Third Item</p>
-            </a>
+            <div class="form-group">
+              <a onclick="swipe_left()">
+                <i class="nc-icon nc-minimal-left"></i>
+                <p><!-- text --></p>
+              </a>
+              <a onclick="swipe_right()" style="float : right;">
+                <i class="nc-icon nc-minimal-right"></i>
+                <p><!-- text --></p>
+              </a>
+                <!--ici-->
+            </div>
           </li>
         </ul>
       </div>
@@ -81,33 +101,15 @@
                 </div>
               </div>
             </form>
-            <ul class="navbar-nav">
-              <li class="nav-item btn-rotate dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="nc-icon nc-bell-55"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Some Actions</span>
-                  </p>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-              </li>
-            </ul>
           </div>
         </div>
       </nav>
       <!-- End Navbar -->
       <div class="content">
         <div class="row">
-          <div class="col-md-12">
+          <div id="x" class="col-md-12">
             @section('contenu')
             @show
-
-
-
           </div>
         </div>
       </div>
@@ -137,6 +139,97 @@
   <script src="{{url('js/plugins/bootstrap-notify.js')}}"></script>
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="{{url('js/paper-dashboard.min.js?v=2.0.1')}}" type="text/javascript"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <!--Script affichage img -->
+  <script src="{{url('js/fonction.js')}}"></script>
+  <script>
+  function val() {
+    f = document.getElementById("formation").value;
+    d = document.getElementById("date").value;
+    imgdd = f + d;
+    var img = document.createElement("img");
+    img.src = "http://edt.glpmr.info/diplomes/" + imgdd + ".png";
+    var div = document.getElementById("x");
+    document.getElementById('x').innerHTML="";
+    div.appendChild(img);
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    started();
+    val();
+  });
+
+  function started(){
+    var liste = <?php echo json_encode($lessemaines) ; ?>;
+    liste.forEach((item, i) => {
+      var val = liste[i].debut + " au " + liste[i].fin;
+      var x = document.getElementById("date");
+      var option = document.createElement("option");
+      option.text = val;
+      option.value =  liste[i].num;
+      if(test(liste[i])==true){
+        option.selected = true ;
+      }
+      x.add(option);
+    });
+  }
+  function test(liste){
+    var nums = liste.num;
+    var ladate=new Date()
+    var sdate1 = liste.debut;
+    var date1 = new Date();
+    date1.setFullYear(sdate1.substr(6,4));
+    var m = parseInt(sdate1.substr(3,2)) - 1;
+    m = '0'+ m.toString();
+    date1.setMonth(m);
+    date1.setDate(sdate1.substr(0,2));
+    var sdate2 = liste.fin;
+    var date2 = new Date();
+    date2.setFullYear(sdate2.substr(6,4));
+    var m = parseInt(sdate1.substr(3,2)) - 1;
+    m = '0'+ m.toString();
+    date2.setMonth(m);
+    date2.setDate(sdate2.substr(0,2));
+    if(date1<= ladate){
+      if(date2 >= ladate){
+        return true;
+      }
+    }
+    return false;
+  }
+  function swipe_right(){
+    var dir = 1;
+    swipe(dir);
+  }
+  function swipe_left(){
+    var dir = -1;
+    swipe(dir);
+  }
+  function swipe(dir){
+    var selected = document.getElementById("date").value;
+    var liste = <?php echo json_encode($lessemaines) ; ?>;
+    liste.forEach((item, i) => {
+      if(liste[i].num == selected){
+        var val = liste[i + dir].debut + " au " + liste[i + dir].fin;
+        var x = document.getElementById("date");
+        var option = document.createElement("option");
+        option.text = val;
+        option.value =  liste[i + dir].num;
+        option.selected = true ;
+        x.add(option);
+        f = document.getElementById("formation").value;
+        d = document.getElementById("date").value;
+        imgdd = f + d;
+        var img = document.createElement("img");
+        img.src = "http://edt.glpmr.info/diplomes/" + imgdd + ".png";
+        var div = document.getElementById("x");
+        document.getElementById('x').innerHTML="";
+        div.appendChild(img);
+      }
+    });
+  }
+  </script>
 </body>
 
 </html>

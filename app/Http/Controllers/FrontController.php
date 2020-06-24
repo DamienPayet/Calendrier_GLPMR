@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\semaines;
+use App\formation;
 
 class FrontController extends Controller
 {
@@ -13,7 +15,10 @@ class FrontController extends Controller
      */
     public function index()
     {
-        return view("front.home.index");
+        $lessemaines = semaines::All();
+        $lesformations = formation::All();
+        return view("front.home.index")->with('lessemaines', $lessemaines)
+                                       ->with('lesformations', $lesformations);
     }
 
     /**
