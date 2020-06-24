@@ -18,12 +18,13 @@
   <!-- CSS Files -->
   <link href="{{url('css/bootstrap.min.css')}}" rel="stylesheet" />
   <link href="{{url('css/paper-dashboard.css?v=2.0.1')}}" rel="stylesheet" />
+  <link href="{{url('css/main.css')}}" rel="stylesheet" />
 </head>
 <body class="">
   <div class="wrapper ">
     <div class="sidebar" data-color="white" data-active-color="danger">
       <div class="logo">
-        <a href="https://www.creative-tim.com" class="simple-text logo-normal">
+        <a href="http://pasteurmontroland.com/" class="simple-text logo-normal">
           <div class="logo-image-big">
             <img src="{{url('img/logo.svg')}}">
           </div>
@@ -65,7 +66,7 @@
                 <i class="nc-icon nc-minimal-right"></i>
                 <p><!-- text --></p>
               </a>
-                <!--ici-->
+              <!--ici-->
             </div>
           </li>
         </ul>
@@ -90,40 +91,15 @@
             <span class="navbar-toggler-bar navbar-kebab"></span>
             <span class="navbar-toggler-bar navbar-kebab"></span>
           </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navigation">
-            <form>
-              <div class="input-group no-border">
-                <input type="text" value="" class="form-control" placeholder="Search...">
-                <div class="input-group-append">
-                  <div class="input-group-text">
-                    <i class="nc-icon nc-zoom-split"></i>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
         </div>
       </nav>
       <!-- End Navbar -->
       <div class="content">
-        <div class="row">
-          <div id="x" class="col-md-12">
-            @section('contenu')
-            @show
-          </div>
+        <div id="x" class="col-md-12">
+          @section('contenu')
+          @show
         </div>
       </div>
-      <footer class="footer" style="position: absolute; bottom: 0; width: -webkit-fill-available;">
-        <div class="container-fluid">
-          <div class="row">
-            <nav class="footer-nav">
-              <ul>
-                <li><a href="#Link" target="_blank">TEXT</a></li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </footer>
     </div>
   </div>
   <!--   Core JS Files   -->
@@ -142,7 +118,6 @@
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <!--Script affichage img -->
-  <script src="{{url('js/fonction.js')}}"></script>
   <script>
   function val() {
     f = document.getElementById("formation").value;
@@ -150,6 +125,7 @@
     imgdd = f + d;
     var img = document.createElement("img");
     img.src = "http://edt.glpmr.info/diplomes/" + imgdd + ".png";
+    img.className = "calendar";
     var div = document.getElementById("x");
     document.getElementById('x').innerHTML="";
     div.appendChild(img);
@@ -223,6 +199,7 @@
         imgdd = f + d;
         var img = document.createElement("img");
         img.src = "http://edt.glpmr.info/diplomes/" + imgdd + ".png";
+        img.className = "calendar";
         var div = document.getElementById("x");
         document.getElementById('x').innerHTML="";
         div.appendChild(img);
