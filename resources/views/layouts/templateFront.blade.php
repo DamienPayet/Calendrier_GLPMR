@@ -263,12 +263,14 @@
           v = tablecookie[i].substring(value.length + tablecookie[i].indexOf(value), tablecookie[i].length);
         }
       }
-      var x = document.getElementById("formation");
-      var option = document.createElement("option");
-      option.text = t;
-      option.value =  v;
-      option.selected = true ;
-      x.add(option);
+      if(v != ""){
+        var x = document.getElementById("formation");
+        var option = document.createElement("option");
+        option.text = t;
+        option.value =  v;
+        option.selected = true ;
+        x.add(option);
+      }
     }
   }
 
