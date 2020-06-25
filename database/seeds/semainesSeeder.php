@@ -349,28 +349,28 @@ class semainesSeeder extends Seeder
      ]);
   DB::table('semaines')->insert([
        'nom'=> 'du 20 au 25 juillet 2020',
-       'num'=> '100000000000',
+       'num'=> '1000000000000',
        'numsem'=>'semaine 30',
        'debut'=>'20/07/2020',
        'fin'=>'26/07/2020',
      ]);
   DB::table('semaines')->insert([
        'nom'=> 'du 27 juillet au 1 ao?t 2020',
-       'num'=> '200000000000',
+       'num'=> '2000000000000',
        'numsem'=>'semaine 31',
        'debut'=>'27/07/2020',
        'fin'=>'02/08/2020',
      ]);
   DB::table('semaines')->insert([
        'nom'=> 'du 3 au 8 ao?t 2020',
-       'num'=> '400000000000',
+       'num'=> '4000000000000',
        'numsem'=>'semaine 32',
        'debut'=>'03/08/2020',
        'fin'=>'09/08/2020',
      ]);
   DB::table('semaines')->insert([
        'nom'=> 'du 10 au 15 ao?t 2020',
-       'num'=> '800000000000',
+       'num'=> '8000000000000',
        'numsem'=>'semaine 33',
        'debut'=>'10/08/2020',
        'fin'=>'16/08/2020',
