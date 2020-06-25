@@ -1,19 +1,23 @@
-function val() {
+
+(function val() {
   f = document.getElementById("formation").value;
   d = document.getElementById("date").value;
   imgdd = f + d;
   var img = document.createElement("img");
   img.src = "http://edt.glpmr.info/diplomes/" + imgdd + ".png";
+  img.className = "calendar";
   var div = document.getElementById("x");
   document.getElementById('x').innerHTML="";
   div.appendChild(img);
+  var a = document.getElementById('linkimg');
+  a.href = "http://edt.glpmr.info/diplomes/" + imgdd + ".png";
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+  lecturecookie();
   started();
   val();
 });
-
 function started(){
   var liste = <?php echo json_encode($lessemaines) ; ?>;
   liste.forEach((item, i) => {
@@ -77,9 +81,47 @@ function swipe(dir){
       imgdd = f + d;
       var img = document.createElement("img");
       img.src = "http://edt.glpmr.info/diplomes/" + imgdd + ".png";
+      img.className = "calendar";
       var div = document.getElementById("x");
       document.getElementById('x').innerHTML="";
       div.appendChild(img);
+      var a = document.getElementById('linkimg');
+      a.href = "http://edt.glpmr.info/diplomes/" + imgdd + ".png";
     }
   });
 }
+// SAuvegarde dans les cookie la formation regarder pour ne pas avoir a la saisir !
+function creationcookie(){
+  var  fv = document.getElementById("formation").value;
+  var selectElmt = document.getElementById("formation");
+  var ft = selectElmt.options[selectElmt.selectedIndex].text;
+  let date = new Date(Date.now() + 86400000); //86400000ms = 1 jour
+  date = date.toUTCString();
+  document.cookie = 'formationv='+ fv +'; expires=' + date;
+  document.cookie = 'formationt='+ft+'; expires=' + date;
+}
+
+function lecturecookie(){
+  if (document.cookie.length > 0){
+    var tablecookie = document.cookie.split(';');
+    var text = "formationt=";
+    var value = "formationv=";
+    var v = "";
+    var t = "";
+    for (i=0;i<tablecookie.length;i++){
+      if(tablecookie[i].indexOf(text) != -1){
+        t = tablecookie[i].substring(text.length + tablecookie[i].indexOf(text), tablecookie[i].length);
+      }
+      if(tablecookie[i].indexOf(value) != -1){
+        v = tablecookie[i].substring(value.length + tablecookie[i].indexOf(value), tablecookie[i].length);
+      }
+    }
+    var x = document.getElementById("formation");
+    var option = document.createElement("option");
+    option.text = t;
+    option.value =  v;
+    option.selected = true ;
+    x.remove(option);
+    x.add(option);
+  }
+});
