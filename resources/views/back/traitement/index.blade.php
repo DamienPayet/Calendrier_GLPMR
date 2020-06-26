@@ -14,3 +14,6 @@
     <input type="submit" value="Lancer le traitement">
   </div>
 </form>
+@if (isset($johny))
+  <a href="/download" class="btn btn-large pull-right"><i class="icon-download-alt"> </i> Seeder.txt </a>
+@endif

@@ -18,3 +18,4 @@ Route::resource('/', 'FrontController');
   Route::get('back/traitement','TraitementController@index')->name('backtraitement');
   Route::post('back/traited','TraitementController@traitementimages')->name('traitementstart');
   Route::post('back/generate','TraitementController@seedergene')->name('traitementseeder');
+  Route::get('/download', 'TraitementController@getDownload');

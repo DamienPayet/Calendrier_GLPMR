@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\semaines;
 use App\formation;
-
+use Response;
 class TraitementController extends Controller
 {
   public function index(){
@@ -13,6 +13,8 @@ class TraitementController extends Controller
   }
   public function seedergene(Request $request){
     function CSV(){
+      //vidange fichier
+      file_put_contents('txt/seeder.txt', '');
       $counter = 0;
       $counter2 = 13;
       $counter5 = 0;
@@ -55,14 +57,21 @@ class TraitementController extends Controller
             }else{
               $number = $number . "000000000000";
             }
-            $line ="   DB::table('semaines')->insert([ " ."\r\n";
-            $line .=" 'nom'=> '". $number."', "."\r\n";
+            $line = "DB::table('semaines')->insert([ " ."\r\n";
+            $line .= "'nom'=> '". $data[0]."', "."\r\n";
             $line .= "'num'=> '".$number . "',"."\r\n";
-            $line .= "'numsem'=>'".$number."',"."\r\n";
-            $line .= "'debut'=>'".$number."',"."\r\n";
-            $line .= "'fin'=>'".$number."',"."\r\n";
+            $line .= "'numsem'=>'".$data[1]."',"."\r\n";
+            $line .= "'debut'=>'".$data[2]."',"."\r\n";
+            $line .= "'fin'=>'".$data[3]."',"."\r\n";
             $line .= "]);"."\r\n";
-            echo $line;
+
+
+            $texte = file_get_contents('txt/seeder.txt');
+            //On ajoute notre nouveau texte à l'ancien
+            $texte .= "\n" . $line;
+            //On écrit tout le texte dans notre fichier
+            file_put_contents('txt/seeder.txt', $texte);
+
           }
         }
         fclose($handle);
@@ -89,7 +98,7 @@ class TraitementController extends Controller
     }else {
       //envoyer yne erreur
     }
-    return view("back.traitement.index");
+    return view("back.traitement.index")->with('johny', 'true');
   }
   public function traitementimages(){
     function setTransparency($new_image,$image_source)
@@ -121,5 +130,11 @@ class TraitementController extends Controller
     }
     return view("back.traitement.index");
   }
+  public function getDownload(){
+        //PDF file is stored under project/public/download/info.pdf
+        $file="./txt/seeder.txt";
+        return Response::download($file);
+}
+
 
 }
