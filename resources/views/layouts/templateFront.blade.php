@@ -20,6 +20,7 @@
 
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
+    <h1>{{url('css/adminlte.min.css')}}</h1>
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       <!-- Left navbar links -->

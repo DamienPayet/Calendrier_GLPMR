@@ -109,18 +109,14 @@ class TraitementController extends Controller
   public function traitementimages(){
     function setTransparency($new_image,$image_source)
     {
-
       $transparencyIndex = imagecolortransparent($image_source);
       $transparencyColor = array('red' => 255, 'green' => 255, 'blue' => 255);
-
       if ($transparencyIndex >= 0) {
         $transparencyColor    = imagecolorsforindex($image_source, $transparencyIndex);
       }
-
       $transparencyIndex    = imagecolorallocate($new_image, $transparencyColor['red'], $transparencyColor['green'], $transparencyColor['blue']);
       imagefill($new_image, 0, 0, $transparencyIndex);
       imagecolortransparent($new_image, $transparencyIndex);
-
     }
     $lessemaines = semaines::All();
     $lesformations = formation::All();
@@ -137,7 +133,6 @@ class TraitementController extends Controller
     return view("back.traitement.index");
   }
   public function getDownload(){
-    //PDF file is stored under project/public/download/info.pdf
     $file="./txt/seeder.txt";
     return Response::download($file);
   }
