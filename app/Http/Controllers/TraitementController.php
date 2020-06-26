@@ -12,69 +12,69 @@ class TraitementController extends Controller
     return view("back.traitement.index");
   }
   public function seedergene(Request $request){
-    function CSV(){
+    function CSV($csv_name){
       //vidange fichier
       file_put_contents('txt/seeder.txt', '');
       $counter = 0;
       $counter2 = 13;
       $counter5 = 0;
       $number = 0;
+      try{
+        if (($handle = fopen("csv/" . $csv_name, "r")) !== FALSE) {
+          while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+            $num = count($data);
 
-      if (($handle = fopen("csv/value.csv", "r")) !== FALSE) {
-        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-          $num = count($data);
-
-          $counter5++;
-          if ($counter5 > 1) {
-            $counter++;
-            switch ($counter) {
-              case 1:
-              $number = "1";
-              $counter2 = $counter2 - 1;
-              break;
-              case 2:
-              $number =  "2";
-              break;
-              case 3:
-              $number =  "4";
-              break;
-              case 4:
-              $number = "8";
-              $counter = 0;
-              break;
-            }
-            $counter3 = $counter2;
-            if ($counter2 > 0) {
-              do {
-                $number = "0" . $number;
-                $counter3 = $counter3 - 1 ;
-              } while ($counter3 != 0);
-              $val = 13 - $counter2 -1 ;
-              for ($i=0; $i < $val ; $i++) {
-                $number =  $number . "0";
+            $counter5++;
+            if ($counter5 > 1) {
+              $counter++;
+              switch ($counter) {
+                case 1:
+                $number = "1";
+                $counter2 = $counter2 - 1;
+                break;
+                case 2:
+                $number =  "2";
+                break;
+                case 3:
+                $number =  "4";
+                break;
+                case 4:
+                $number = "8";
+                $counter = 0;
+                break;
               }
-
-            }else{
-              $number = $number . "000000000000";
+              $counter3 = $counter2;
+              if ($counter2 > 0) {
+                do {
+                  $number = "0" . $number;
+                  $counter3 = $counter3 - 1 ;
+                } while ($counter3 != 0);
+                $val = 13 - $counter2 -1 ;
+                for ($i=0; $i < $val ; $i++) {
+                  $number =  $number . "0";
+                }
+              }else{
+                $number = $number . "000000000000";
+              }
+              $line = "DB::table('semaines')->insert([ " ."\r\n";
+              $line .= "'nom'=> '". $data[0]."', "."\r\n";
+              $line .= "'num'=> '".$number . "',"."\r\n";
+              $line .= "'numsem'=>'".$data[1]."',"."\r\n";
+              $line .= "'debut'=>'".$data[2]."',"."\r\n";
+              $line .= "'fin'=>'".$data[3]."',"."\r\n";
+              $line .= "]);"."\r\n";
+              //ecriture dans le fichier
+              $texte = file_get_contents('txt/seeder.txt');
+              $texte .= "\n" . $line;
+              file_put_contents('txt/seeder.txt', $texte);
             }
-            $line = "DB::table('semaines')->insert([ " ."\r\n";
-            $line .= "'nom'=> '". $data[0]."', "."\r\n";
-            $line .= "'num'=> '".$number . "',"."\r\n";
-            $line .= "'numsem'=>'".$data[1]."',"."\r\n";
-            $line .= "'debut'=>'".$data[2]."',"."\r\n";
-            $line .= "'fin'=>'".$data[3]."',"."\r\n";
-            $line .= "]);"."\r\n";
-
-
-            $texte = file_get_contents('txt/seeder.txt');
-            //On ajoute notre nouveau texte à l'ancien
-            $texte .= "\n" . $line;
-            //On écrit tout le texte dans notre fichier
-            file_put_contents('txt/seeder.txt', $texte);
-
           }
+
+          fclose($handle);
+          unlink(public_path("csv\\" . $csv_name));
         }
-        fclose($handle);
+      }catch(Exception $e){
+        return view("back.traitement.index")->with('error', "Erreur : ". $e);
       }
     }
     //Pour le CSV
@@ -90,15 +90,15 @@ class TraitementController extends Controller
       // Si il y a bien un fichier, on le déplace dans le répertoire et on stock le chemin dans la base de donnée
       if ($CSV_upload) {
         if ($CSV_upload->move('csv', $CSV_nommage)) {
-          CSV();
+          CSV($CSV_nommage);
         }
       } else {
-        // ENVOYER UNE ERREUR
+        return view("back.traitement.index")->with('error', "Erreur l'or de l'envoie du CSV");
       }
     }else {
-      //envoyer yne erreur
+      return view("back.traitement.index")->with('error', 'Erreur, Aucun CSV transmis');
     }
-    return view("back.traitement.index")->with('johny', 'true');
+    return view("back.traitement.index")->with('ok', 'true');
   }
   public function traitementimages(){
     function setTransparency($new_image,$image_source)
@@ -131,10 +131,10 @@ class TraitementController extends Controller
     return view("back.traitement.index");
   }
   public function getDownload(){
-        //PDF file is stored under project/public/download/info.pdf
-        $file="./txt/seeder.txt";
-        return Response::download($file);
-}
+    //PDF file is stored under project/public/download/info.pdf
+    $file="./txt/seeder.txt";
+    return Response::download($file);
+  }
 
 
 }

@@ -9,11 +9,17 @@
 <form method="post" action="{{route('traitementseeder')}}"  enctype="multipart/form-data" >
   @csrf
   <div class="form-example">
-    <input type="file" id="file" name="file">
-    <input type="text" id="txt" name="txt">
-    <input type="submit" value="Lancer le traitement">
+    <div>
+      <input type="file" id="file" name="file">
+    </div>
+    <div>
+      <input type="submit" value="Lancer le traitement">
+    </div>
   </div>
 </form>
-@if (isset($johny))
+@if (isset($ok))
   <a href="/download" class="btn btn-large pull-right"><i class="icon-download-alt"> </i> Seeder.txt </a>
+@endif
+@if (isset($error))
+  <h1 style="color : red;">{{$error}}</h1>
 @endif
