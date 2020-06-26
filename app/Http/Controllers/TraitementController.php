@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\semaines;
 use App\formation;
 use Response;
+use Assert\Assertion;
+use Assert\AssertionFailedException;
+
 class TraitementController extends Controller
 {
   public function index(){
@@ -19,7 +22,7 @@ class TraitementController extends Controller
       $counter2 = 13;
       $counter5 = 0;
       $number = 0;
-      try{
+
         if (($handle = fopen("csv/" . $csv_name, "r")) !== FALSE) {
           while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
             $num = count($data);
@@ -56,6 +59,7 @@ class TraitementController extends Controller
               }else{
                 $number = $number . "000000000000";
               }
+
               $line = "DB::table('semaines')->insert([ " ."\r\n";
               $line .= "'nom'=> '". $data[0]."', "."\r\n";
               $line .= "'num'=> '".$number . "',"."\r\n";
@@ -73,15 +77,17 @@ class TraitementController extends Controller
           fclose($handle);
           unlink(public_path("csv\\" . $csv_name));
         }
-      }catch(Exception $e){
-        return view("back.traitement.index")->with('error', "Erreur : ". $e);
-      }
+
     }
     //Pour le CSV
     $rand = "fsffds";
     $CSV_upload = $request->file('file');
 
+
     if($CSV_upload != NULL){
+      if(pathinfo($CSV_upload->getClientOriginalName(), PATHINFO_EXTENSION) != "csv"){
+        return view("back.traitement.index")->with('error', "Erreur, Le fichier transmis n'est pas un CSV !");
+      }
       // Définition du chemin de stockage
       // Nommage du fichier
       $CSV_nommage = $CSV_upload->getClientOriginalName();
