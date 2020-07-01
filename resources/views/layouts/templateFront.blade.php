@@ -20,7 +20,7 @@
 
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
-    <h1>{{url('css/adminlte.min.css')}}</h1>
+
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       <!-- Left navbar links -->
@@ -149,7 +149,7 @@
   <script type="text/javascript" src="{{url('js/fonction.js')}}"></script>
   <script>
 
-//Fonction recuperation de l'image
+  //Fonction recuperation de l'image
   function val() {
     f = document.getElementById("formation").value;
     d = document.getElementById("date").value;
@@ -186,24 +186,13 @@
   }
   // Fonction chargement de l'ep de la semaine en cour .
   function test(liste){
-    var nums = liste.num;
-    var ladate=new Date()
     var sdate1 = liste.debut;
-    var date1 = new Date();
-    date1.setFullYear(sdate1.substr(6,4));
-    var m = parseInt(sdate1.substr(3,2)) - 1;
-    m = '0'+ m.toString();
-    date1.setMonth(m);
-    date1.setDate(sdate1.substr(0,2));
     var sdate2 = liste.fin;
-    var date2 = new Date();
-    date2.setFullYear(sdate2.substr(6,4));
-    var m = parseInt(sdate1.substr(3,2)) - 1;
-    m = '0'+ m.toString();
-    date2.setMonth(m);
-    date2.setDate(sdate2.substr(0,2));
-    if(date1<= ladate){
-      if(date2 >= ladate){
+    var date1 = new Date(sdate1.substr(6,4), sdate1.substr(3,2) -1 , sdate1.substr(0,2));
+    var date2 = new Date(sdate2.substr(6,4), sdate2.substr(3,2) -1 , sdate2.substr(0,2));
+    var today = new Date;
+    if(date1 < today){
+      if (today < date2){
         return true;
       }
     }
@@ -275,6 +264,6 @@
     }
   }
 
-  </script>
+</script>
 </body>
 </html>

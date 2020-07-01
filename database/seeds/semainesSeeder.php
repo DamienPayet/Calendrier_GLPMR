@@ -149,7 +149,7 @@ class semainesSeeder extends Seeder
        'num'=> '0000000080000',
        'numsem'=>'semaine 01',
        'debut'=>'30/12/2019',
-       'fin'=>'05-janv-20',
+       'fin'=>'05/01/2020',
      ]);
   DB::table('semaines')->insert([
        'nom'=> 'du 6 au 11 janvier 2020',
