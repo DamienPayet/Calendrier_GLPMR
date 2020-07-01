@@ -50,7 +50,7 @@ class FrontController extends Controller
      */
     public function show($id)
     {
-        //
+      return view("front.home.image")->with('id', $id);
     }
 
     /**

@@ -13,8 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::resource('/', 'FrontController');
+  
+  Route::resource('/', 'FrontController');
+  Route::get('img/{id}', 'FrontController@show')->name('viewimg');
   Route::get('back/traitement','TraitementController@index')->name('backtraitement');
   Route::post('back/traited','TraitementController@traitementimages')->name('traitementstart');
   Route::post('back/generate','TraitementController@seedergene')->name('traitementseeder');
