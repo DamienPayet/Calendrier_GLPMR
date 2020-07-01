@@ -31,7 +31,14 @@
       </ul>
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
-
+        <!-- Administration -->
+        <li class="nav-item">
+          <a class="nav-link" role="button" href="{{route('backtraitement')}}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+        </li>
+        <!-- Prof
+        <li class="nav-item">
+          <a class="nav-link"  role="button"><i class="fa fa-user-circle" aria-hidden="true"></i></a>
+        </li>-->
         <li class="nav-item">
           <a class="nav-link" id="linkimg"   role="button"><i class="far fa-images"></i></a>
         </li>
