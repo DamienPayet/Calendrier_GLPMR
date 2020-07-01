@@ -31,7 +31,7 @@
   <!-- Main content -->
   <div class="content">
     <div class="container-fluid">
-      <img src="http://calendrier_glpmr.test/img/{{$id}}.png" class="calendar">
+      <img src="{{url('')}}/img/{{$id}}.png" class="calendar">
     </div>
     <!-- /.container-fluid -->
   </div>

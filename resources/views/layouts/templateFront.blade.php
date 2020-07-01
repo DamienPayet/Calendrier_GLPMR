@@ -32,7 +32,7 @@
       <ul class="navbar-nav ml-auto">
         <!-- Administration -->
         <li class="nav-item">
-          <a class="nav-link" role="button" {{route('backtraitement')}}  ><i class="fa fa-plus" aria-hidden="true"></i></a>
+          <a class="nav-link" role="button" href="{{route('backtraitement')}}"  ><i class="fa fa-plus" aria-hidden="true"></i></a>
         </li>
         <!-- Prof
         <li class="nav-item">
