@@ -12,11 +12,22 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::group(['middleware' => 'auth'], function () {
 
-  
+    Route::get('/home', 'TraitementController@index')->name('home');
+    Route::get('back/traitement','TraitementController@index')->name('backtraitement');
+    Route::post('back/traited','TraitementController@traitementimages')->name('traitementstart');
+    Route::post('back/generate','TraitementController@seedergene')->name('traitementseeder');
+    Route::get('/download', 'TraitementController@getDownload');
+});
+
+
+
   Route::resource('/', 'FrontController');
   Route::get('img/{id}', 'FrontController@show')->name('viewimg');
-  Route::get('back/traitement','TraitementController@index')->name('backtraitement');
-  Route::post('back/traited','TraitementController@traitementimages')->name('traitementstart');
-  Route::post('back/generate','TraitementController@seedergene')->name('traitementseeder');
-  Route::get('/download', 'TraitementController@getDownload');
+
+
+
+Auth::routes(['register' => false]);
+
+
