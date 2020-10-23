@@ -23,3 +23,15 @@
 @if (isset($error))
   <h1 style="color : red;">{{$error}}</h1>
 @endif
+<h1>Générer la BDD</h1>
+<form method="post" action="{{route('genbdd')}}"  enctype="multipart/form-data" >
+    @csrf
+    <div class="form-example">
+        <div>
+            <input type="file" id="file" name="file">
+        </div>
+        <div>
+            <input type="submit" value="Lancer l'integration'">
+        </div>
+    </div>
+</form>

@@ -18,6 +18,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('back/traitement','TraitementController@index')->name('backtraitement');
     Route::post('back/traited','TraitementController@traitementimages')->name('traitementstart');
     Route::post('back/generate','TraitementController@seedergene')->name('traitementseeder');
+    Route::post('back/bddgenerate', 'TraitementController@set_data')->name('genbdd');
     Route::get('/download', 'TraitementController@getDownload');
 });
 
