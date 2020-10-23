@@ -75,7 +75,7 @@ class TraitementController extends Controller
           }
 
           fclose($handle);
-          unlink(public_path("csv\\" . $csv_name));
+          unlink(public_path("csv/" . $csv_name));
         }
 
     }
@@ -92,7 +92,7 @@ class TraitementController extends Controller
       // Nommage du fichier
       $CSV_nommage = $CSV_upload->getClientOriginalName();
       // On indique le chemin du fichier pour la base de donnée
-      $CSV_get = 'CSV\\' . $CSV_nommage;
+      $CSV_get = 'CSV/' . $CSV_nommage;
       // Si il y a bien un fichier, on le déplace dans le répertoire et on stock le chemin dans la base de donnée
       if ($CSV_upload) {
         if ($CSV_upload->move('csv', $CSV_nommage)) {
